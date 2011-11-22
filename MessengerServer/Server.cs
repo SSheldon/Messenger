@@ -27,9 +27,12 @@ namespace Messenger
         public void HandleCientConnection()
         {
             Socket client = sock.Accept();
-            byte[] buffer = new byte[128];
-            int bytesRead = client.Receive(buffer);
-            Console.WriteLine(ASCIIEncoding.ASCII.GetString(buffer, 0, bytesRead));
+            while (true)
+            {
+                byte[] buffer = new byte[128];
+                int bytesRead = client.Receive(buffer);
+                Console.WriteLine(ASCIIEncoding.ASCII.GetString(buffer, 0, bytesRead));
+            }
             client.Shutdown(SocketShutdown.Both);
             client.Close();
         }
