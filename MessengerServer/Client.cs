@@ -22,11 +22,17 @@ namespace Messenger
 
         public void HandleConnection()
         {
-            while (true)
+            while (sock.Connected)
             {
-                Message message = Message.Receive(sock);
-                Console.WriteLine(message.GetContentAsAsciiString());
+                if (sock.Poll(1000, SelectMode.SelectRead) && sock.Connected)
+                {
+                    Console.WriteLine(Message.Receive(sock).GetContentAsAsciiString());
+                }
             }
+        }
+
+        public void CloseConnection()
+        {
             sock.Shutdown(SocketShutdown.Both);
             sock.Close();
         }
