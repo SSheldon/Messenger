@@ -8,9 +8,11 @@ namespace Messenger
     public class Server
     {
         Socket sock;
+        Room room;
 
         public Server(int port = 4560)
         {
+            room = new Room(this);
             sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             sock.Bind(new IPEndPoint(IPAddress.Any, port));
             sock.Listen(10);
@@ -20,14 +22,9 @@ namespace Messenger
         {
             while (true)
             {
-                HandleCientConnection();
+                Socket clientSock = sock.Accept();
+                room.AddClient(new Client(this, clientSock));
             }
-        }
-
-        public void HandleCientConnection()
-        {
-            Socket clientSock = sock.Accept();
-            Client client = new Client(this, clientSock);
         }
 
         public static void Main(string[] args)

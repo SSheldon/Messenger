@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="Room.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
