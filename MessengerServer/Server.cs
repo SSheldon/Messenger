@@ -26,14 +26,9 @@ namespace Messenger
 
         public void HandleCientConnection()
         {
-            Socket client = sock.Accept();
-            while (true)
-            {
-                Message message = Message.Receive(client);
-                Console.WriteLine(message.GetContentAsAsciiString());
-            }
-            client.Shutdown(SocketShutdown.Both);
-            client.Close();
+            Socket clientSock = sock.Accept();
+            Client client = new Client(this, clientSock);
+            client.HandleConnection();
         }
 
         public static void Main(string[] args)
