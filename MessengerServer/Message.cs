@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 namespace Messenger
 {
@@ -12,23 +13,30 @@ namespace Messenger
     public class Message
     {
         MessageType type;
-        int length;
         byte[] content;
+        int length
+        {
+            get { return content.Length; }
+        }
 
         public Message(MessageType type, byte[] content)
         {
             this.type = type;
             this.content = content;
-            this.length = content.Length;
         }
 
         public byte[] GetBytes()
         {
-            byte[] bytes = new byte[content.Length + 5];
+            byte[] bytes = new byte[length + 5];
             Array.Copy(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(length)), bytes, 4);
             bytes[4] = (byte)type;
-            Array.Copy(content, bytes, content.Length);
+            Array.Copy(content, 0, bytes, 5, length);
             return bytes;
+        }
+
+        public string GetContentAsAsciiString()
+        {
+            return ASCIIEncoding.ASCII.GetString(content, 0, length);
         }
 
         public void Send(Socket sock)
@@ -57,7 +65,6 @@ namespace Messenger
             {
                 recv += sock.Receive(buffer, recv, length - recv, SocketFlags.None);
             }
-            sock.Receive(buffer);
             return new Message(type, buffer);
         }
     }
