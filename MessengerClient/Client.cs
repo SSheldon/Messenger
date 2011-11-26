@@ -15,7 +15,7 @@ namespace Messenger
             {
                 string s = Console.ReadLine();
                 byte[] buffer = ASCIIEncoding.ASCII.GetBytes(s);
-                sock.Send(buffer);
+                Message.Send(MessageType.MessagePost, buffer, sock);
             }
         }
     }

@@ -29,9 +29,8 @@ namespace Messenger
             Socket client = sock.Accept();
             while (true)
             {
-                byte[] buffer = new byte[128];
-                int bytesRead = client.Receive(buffer);
-                Console.WriteLine(ASCIIEncoding.ASCII.GetString(buffer, 0, bytesRead));
+                Message message = Message.Receive(client);
+                Console.WriteLine(message.GetContentAsAsciiString());
             }
             client.Shutdown(SocketShutdown.Both);
             client.Close();
