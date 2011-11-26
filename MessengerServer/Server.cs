@@ -28,7 +28,6 @@ namespace Messenger
         {
             Socket clientSock = sock.Accept();
             Client client = new Client(this, clientSock);
-            client.HandleConnection();
         }
 
         public static void Main(string[] args)
