@@ -12,11 +12,13 @@ namespace Messenger
         Room room;
         Socket sock;
         Thread handler;
+        Queue<Message> pending;
 
         public Client(Server server, Socket sock)
         {
             this.server = server;
             this.sock = sock;
+            this.pending = new Queue<Message>();
             this.handler = new Thread(new ThreadStart(this.HandleConnection));
             handler.Start();
         }
@@ -25,6 +27,17 @@ namespace Messenger
         {
             while (sock.Connected)
             {
+                while (true)
+                {
+                    Message m = null;
+                    lock (pending)
+                    {
+                        if (pending.Count > 0)
+                            m = pending.Dequeue();
+                    }
+                    if (m != null) m.Send(sock);
+                    else break;
+                }
                 if (sock.Poll(1000, SelectMode.SelectRead) && sock.Connected)
                 {
                     HandleRequest(Message.Receive(sock));
@@ -46,6 +59,14 @@ namespace Messenger
         {
             sock.Shutdown(SocketShutdown.Both);
             sock.Close();
+        }
+
+        public void SendMessage(Message message)
+        {
+            lock (pending)
+            {
+                pending.Enqueue(message);
+            }
         }
 
         public void JoinRoom(Room room)
