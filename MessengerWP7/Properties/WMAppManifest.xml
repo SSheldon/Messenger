@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{a1056fba-a71d-4360-98df-4417df66bdb9}" Title="MessengerWP7" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="MessengerWP7 author" Description="Sample description" Publisher="MessengerWP7">
+  <App xmlns="" ProductID="{b9d03a0a-1dfb-4b0c-a9d2-ada525ddd86b}" Title="Messenger" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="Messenger author" Description="Sample description" Publisher="Messenger">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES"/>
@@ -23,11 +23,11 @@
       <DefaultTask  Name ="_default" NavigationPage="MainPage.xaml"/>
     </Tasks>
     <Tokens>
-      <PrimaryToken TokenID="MessengerWP7Token" TaskName="_default">
+      <PrimaryToken TokenID="MessengerToken" TaskName="_default">
         <TemplateType5>
           <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
           <Count>0</Count>
-          <Title>MessengerWP7</Title>
+          <Title>Messenger</Title>
         </TemplateType5>
       </PrimaryToken>
     </Tokens>

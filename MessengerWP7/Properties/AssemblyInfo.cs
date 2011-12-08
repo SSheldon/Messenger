@@ -6,11 +6,11 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MessengerWP7")]
+[assembly: AssemblyTitle("Messenger")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("MessengerWP7")]
+[assembly: AssemblyProduct("Messenger")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,7 +21,7 @@ using System.Resources;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("582c7247-89f7-4d58-8fbf-89ba199a0539")]
+[assembly: Guid("32c0b8de-c2e8-4f15-a41e-cb50f5a893c9")]
 
 // Version information for an assembly consists of the following four values:
 //
