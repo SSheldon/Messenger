@@ -37,11 +37,11 @@ namespace Messenger
                             m = pending.Dequeue();
                         else break;
                     }
-                    m.Send(sock);
+                    MessageOps.Send(sock, m);
                 }
                 if (sock.Poll(1000, SelectMode.SelectRead) && sock.Connected)
                 {
-                    HandleRequest(Message.Receive(sock));
+                    HandleRequest(MessageOps.Receive(sock));
                 }
             }
             CloseConnection();

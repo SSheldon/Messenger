@@ -40,6 +40,9 @@
     <Compile Include="..\MessengerServer\Message.cs">
       <Link>Message.cs</Link>
     </Compile>
+    <Compile Include="..\MessengerServer\MessageOps.cs">
+      <Link>MessageOps.cs</Link>
+    </Compile>
     <Compile Include="Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
