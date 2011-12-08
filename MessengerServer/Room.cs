@@ -17,12 +17,18 @@ namespace Messenger
 
         public void AddClient(Client client)
         {
-            clients.Add(client);
+            lock (clients)
+            {
+                clients.Add(client);
+            }
         }
 
         public void RemoveClient(Client client)
         {
-            clients.Remove(client);
+            lock (clients)
+            {
+                clients.Remove(client);
+            }
         }
     }
 }
