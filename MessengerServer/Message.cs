@@ -23,6 +23,10 @@ namespace Messenger
         {
             get { return type; }
         }
+        public byte[] Content
+        {
+            get { return content; }
+        }
 
         public Message(MessageType type, byte[] content)
         {

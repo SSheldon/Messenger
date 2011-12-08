@@ -51,7 +51,7 @@ namespace Messenger
             switch (request.Type)
             {
                 case MessageType.MessagePost:
-                    room.PostMessage(request);
+                    room.PostMessage(username, request);
                     break;
                 case MessageType.Login:
                     username = request.GetContentAsAsciiString();

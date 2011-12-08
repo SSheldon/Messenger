@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 
 namespace Messenger
@@ -72,6 +73,15 @@ namespace Messenger
                 pending.Enqueue(message);
                 posterWait.Set();
             }
+        }
+
+        public void PostMessage(string username, Message message)
+        {
+            string prepend = username + ": ";
+            byte[] buffer = new byte[prepend.Length + message.Content.Length];
+            Encoding.ASCII.GetBytes(prepend, 0, prepend.Length, buffer, 0);
+            Array.Copy(message.Content, 0, buffer, prepend.Length, message.Content.Length);
+            PostMessage(new Message(MessageType.MessagePost, buffer));
         }
     }
 }
