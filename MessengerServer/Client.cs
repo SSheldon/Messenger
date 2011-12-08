@@ -57,7 +57,7 @@ namespace Messenger
                     room.PostMessage(username, request);
                     break;
                 case MessageType.Login:
-                    username = request.GetContentAsAsciiString();
+                    username = request.GetContentAsString();
                     break;
             }
         }

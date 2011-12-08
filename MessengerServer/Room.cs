@@ -40,7 +40,7 @@ namespace Messenger
                             break;
                         }
                     }
-                    Console.WriteLine(m.GetContentAsAsciiString());
+                    Console.WriteLine(m.GetContentAsString());
                     lock (clients)
                     {
                         foreach (Client c in clients)
@@ -79,7 +79,7 @@ namespace Messenger
         {
             string prepend = username + ": ";
             byte[] buffer = new byte[prepend.Length + message.Content.Length];
-            Encoding.ASCII.GetBytes(prepend, 0, prepend.Length, buffer, 0);
+            Message.Encoding.GetBytes(prepend, 0, prepend.Length, buffer, 0);
             Array.Copy(message.Content, 0, buffer, prepend.Length, message.Content.Length);
             PostMessage(new Message(MessageType.MessagePost, buffer));
         }

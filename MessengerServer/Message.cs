@@ -12,6 +12,11 @@ namespace Messenger
 
     public class Message
     {
+        public static System.Text.Encoding Encoding
+        {
+            get { return System.Text.Encoding.UTF8; }
+        }
+
         MessageType type;
         byte[] content;
         int length
@@ -43,9 +48,9 @@ namespace Messenger
             return bytes;
         }
 
-        public string GetContentAsAsciiString()
+        public string GetContentAsString()
         {
-            return Encoding.ASCII.GetString(content, 0, length);
+            return Message.Encoding.GetString(content, 0, length);
         }
     }
 }
