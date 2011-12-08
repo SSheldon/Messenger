@@ -57,7 +57,7 @@ namespace Messenger
             {
                 //connected and data successfully sent
                 App.ConnectedSocket = e.ConnectSocket;
-                Dispatcher.BeginInvoke(() => MessageBox.Show("Sending successful!"));
+                Dispatcher.BeginInvoke(() => NavigationService.Navigate(new Uri("/ChatRoomPage.xaml", UriKind.Relative)));
             }
         }
     }
