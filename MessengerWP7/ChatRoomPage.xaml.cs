@@ -60,5 +60,26 @@ namespace Messenger
                 BeginReceive();
             }
         }
+
+        private void PostClick(object sender, RoutedEventArgs e)
+        {
+            string post = InputBox.Text;
+            InputBox.Text = string.Empty;
+            SocketAsyncEventArgs args = new SocketAsyncEventArgs();
+            Message m = new Message(MessageType.MessagePost, Message.Encoding.GetBytes(post));
+            byte[] buffer = m.GetBytes();
+            args.SetBuffer(buffer, 0, buffer.Length);
+            args.Completed += new EventHandler<SocketAsyncEventArgs>(MessagePosted);
+            if (!App.ConnectedSocket.SendAsync(args)) MessagePosted(null, args);
+        }
+
+        private void MessagePosted(object sender, SocketAsyncEventArgs e)
+        {
+            if (e.BytesTransferred < e.Count)
+            {
+                e.SetBuffer(e.Offset + e.BytesTransferred, e.Count - e.BytesTransferred);
+                if (!App.ConnectedSocket.SendAsync(e)) MessagePosted(e.ConnectSocket, e);
+            }
+        }
     }
 }

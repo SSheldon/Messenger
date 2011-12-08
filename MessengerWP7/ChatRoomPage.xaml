@@ -30,7 +30,7 @@
             <ListBox x:Name="ChatLogBox" Height="590" />
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="InputBox" TextWrapping="Wrap" Width="357" Height="105" />
-                <Button Content="Post" />
+                <Button Content="Post" Click="PostClick" />
             </StackPanel>
         </StackPanel>
     </Grid>
