@@ -26,8 +26,18 @@ namespace Messenger
             {
                 if (sock.Poll(1000, SelectMode.SelectRead) && sock.Connected)
                 {
-                    Console.WriteLine(Message.Receive(sock).GetContentAsAsciiString());
+                    HandleRequest(Message.Receive(sock));
                 }
+            }
+        }
+
+        private void HandleRequest(Message request)
+        {
+            switch (request.Type)
+            {
+                case MessageType.MessagePost:
+                    Console.WriteLine(request.GetContentAsAsciiString());
+                    break;
             }
         }
 

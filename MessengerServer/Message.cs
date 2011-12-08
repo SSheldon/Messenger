@@ -19,6 +19,11 @@ namespace Messenger
             get { return content.Length; }
         }
 
+        public MessageType Type
+        {
+            get { return type; }
+        }
+
         public Message(MessageType type, byte[] content)
         {
             this.type = type;
