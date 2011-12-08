@@ -23,7 +23,7 @@ namespace Messenger
             while (true)
             {
                 Socket clientSock = sock.Accept();
-                room.AddClient(new Client(this, clientSock));
+                new Client(this, clientSock).JoinRoom(room);
             }
         }
 

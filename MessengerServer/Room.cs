@@ -19,5 +19,10 @@ namespace Messenger
         {
             clients.Add(client);
         }
+
+        public void RemoveClient(Client client)
+        {
+            clients.Remove(client);
+        }
     }
 }

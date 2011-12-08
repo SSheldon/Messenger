@@ -9,6 +9,7 @@ namespace Messenger
     public class Client
     {
         Server server;
+        Room room;
         Socket sock;
         Thread handler;
 
@@ -45,6 +46,20 @@ namespace Messenger
         {
             sock.Shutdown(SocketShutdown.Both);
             sock.Close();
+        }
+
+        public void JoinRoom(Room room)
+        {
+            if (this.room != null)
+                this.room.RemoveClient(this);
+            this.room = room;
+            room.AddClient(this);
+        }
+
+        public void LeaveRoom()
+        {
+            room.RemoveClient(this);
+            room = null;
         }
     }
 }
