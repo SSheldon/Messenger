@@ -66,15 +66,28 @@ namespace Messenger
         public static Message Receive(Socket sock)
         {
             byte[] buffer = new byte[5];
-            sock.Receive(buffer);
+            if (!Receive(sock, buffer)) return null;
             int length = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(buffer, 0));
             MessageType type = (MessageType)buffer[4];
             buffer = new byte[length];
-            for (int recv = 0; recv < length; )
+            if (!Receive(sock, buffer)) return null;
+            else return new Message(type, buffer);
+        }
+
+        private static bool Receive(Socket sock, byte[] buffer)
+        {
+            for (int recv = 0; recv < buffer.Length; )
             {
-                recv += sock.Receive(buffer, recv, length - recv, SocketFlags.None);
+                try
+                {
+                    recv += sock.Receive(buffer, recv, buffer.Length - recv, SocketFlags.None);
+                }
+                catch (SocketException)
+                {
+                    return false;
+                }
             }
-            return new Message(type, buffer);
+            return true;
         }
     }
 }

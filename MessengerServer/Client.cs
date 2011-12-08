@@ -48,6 +48,7 @@ namespace Messenger
 
         private void HandleRequest(Message request)
         {
+            if (request == null) return;
             switch (request.Type)
             {
                 case MessageType.MessagePost:
