@@ -34,9 +34,9 @@ namespace Messenger
                     {
                         if (pending.Count > 0)
                             m = pending.Dequeue();
+                        else break;
                     }
-                    if (m != null) m.Send(sock);
-                    else break;
+                    m.Send(sock);
                 }
                 if (sock.Poll(1000, SelectMode.SelectRead) && sock.Connected)
                 {

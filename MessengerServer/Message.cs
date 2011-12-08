@@ -41,7 +41,7 @@ namespace Messenger
 
         public string GetContentAsAsciiString()
         {
-            return ASCIIEncoding.ASCII.GetString(content, 0, length);
+            return Encoding.ASCII.GetString(content, 0, length);
         }
 
         public void Send(Socket sock)
