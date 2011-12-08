@@ -56,6 +56,7 @@ namespace Messenger
             else
             {
                 //connected and data successfully sent
+                App.ConnectedSocket = e.ConnectSocket;
                 Dispatcher.BeginInvoke(() => MessageBox.Show("Sending successful!"));
             }
         }
