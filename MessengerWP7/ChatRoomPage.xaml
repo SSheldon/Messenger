@@ -26,9 +26,13 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ListBox x:Name="ChatLogBox" />
-        </Grid>
+        <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <ListBox x:Name="ChatLogBox" Height="590" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="InputBox" TextWrapping="Wrap" Width="357" Height="105" />
+                <Button Content="Post" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->
