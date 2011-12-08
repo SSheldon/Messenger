@@ -13,6 +13,7 @@ namespace Messenger
         Socket sock;
         Thread handler;
         Queue<Message> pending;
+        string username;
 
         public Client(Server server, Socket sock)
         {
@@ -51,6 +52,9 @@ namespace Messenger
             {
                 case MessageType.MessagePost:
                     room.PostMessage(request);
+                    break;
+                case MessageType.Login:
+                    username = request.GetContentAsAsciiString();
                     break;
             }
         }

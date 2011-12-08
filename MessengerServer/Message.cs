@@ -7,7 +7,7 @@ namespace Messenger
 {
     public enum MessageType : byte
     {
-        MessagePost, Connect
+        MessagePost, Login
     }
 
     public class Message
