@@ -44,6 +44,8 @@ namespace Messenger
                     HandleRequest(Message.Receive(sock));
                 }
             }
+            CloseConnection();
+            LeaveRoom();
         }
 
         private void HandleRequest(Message request)
@@ -64,6 +66,7 @@ namespace Messenger
         {
             sock.Shutdown(SocketShutdown.Both);
             sock.Close();
+            sock = null;
         }
 
         public void SendMessage(Message message)
