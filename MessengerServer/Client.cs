@@ -50,7 +50,7 @@ namespace Messenger
             switch (request.Type)
             {
                 case MessageType.MessagePost:
-                    Console.WriteLine(request.GetContentAsAsciiString());
+                    room.PostMessage(request.GetContentAsAsciiString());
                     break;
             }
         }

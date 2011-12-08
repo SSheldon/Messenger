@@ -30,5 +30,10 @@ namespace Messenger
                 clients.Remove(client);
             }
         }
+
+        public void PostMessage(string message)
+        {
+            Console.WriteLine(message);
+        }
     }
 }
