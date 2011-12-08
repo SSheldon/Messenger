@@ -56,7 +56,7 @@ namespace Messenger
             {
                 string content = message.GetContentAsString();
                 message = null;
-                Dispatcher.BeginInvoke(() => MessageBox.Show(content));
+                Dispatcher.BeginInvoke(() => ChatLogBox.Items.Add(content));
                 BeginReceive();
             }
         }
