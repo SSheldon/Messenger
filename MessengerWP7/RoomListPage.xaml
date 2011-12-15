@@ -41,7 +41,7 @@
     <!--Sample code showing usage of ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar.add.rest.png" Text="Create" />
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.add.rest.png" Text="Create" Click="AddClick" />
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.refresh.rest.png" Text="Refresh"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

@@ -52,5 +52,10 @@ namespace Messenger
                 Dispatcher.BeginInvoke(() => NavigationService.Navigate(new Uri("/ChatRoomPage.xaml", UriKind.Relative)));
             }
         }
+
+        private void AddClick(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/CreateRoomPage.xaml", UriKind.Relative));
+        }
     }
 }
