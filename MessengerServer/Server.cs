@@ -25,11 +25,19 @@ namespace Messenger
 
             public void Add(Room room)
             {
-                if (room == null) return;
+                if (room == null || IsFull) return;
                 rooms[firstOpenId] = room;
                 count++;
                 while (!IsFull && rooms[firstOpenId] != null)
                     firstOpenId = (byte)(firstOpenId == byte.MaxValue ? 0 : firstOpenId + 1);
+            }
+
+            public Room CreateAndAdd(Server svr)
+            {
+                if (IsFull) return null;
+                Room room = new Room(svr, firstOpenId);
+                Add(room);
+                return room;
             }
 
             public void Remove(byte id)
@@ -69,10 +77,12 @@ namespace Messenger
 
         public Room CreateRoom()
         {
-            if (rooms.IsFull) return null;
-            Room room = new Room(this);
-            rooms.Add(room);
-            return room;
+            return rooms.CreateAndAdd(this);
+        }
+
+        public void RemoveRoom(Room room)
+        {
+            rooms.Remove(room.Id);
         }
 
         public static void Main(string[] args)

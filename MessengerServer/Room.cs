@@ -8,14 +8,21 @@ namespace Messenger
     public class Room
     {
         Server server;
+        byte id;
         List<Client> clients;
         Queue<Message> pending;
         Thread poster;
         ManualResetEvent posterWait;
 
-        public Room(Server server)
+        public byte Id
+        {
+            get { return id; }
+        }
+
+        public Room(Server server, byte id)
         {
             this.server = server;
+            this.id = id;
             clients = new List<Client>();
             pending = new Queue<Message>();
             posterWait = new ManualResetEvent(true);
