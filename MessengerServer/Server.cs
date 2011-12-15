@@ -34,10 +34,10 @@ namespace Messenger
                     firstOpenId = (byte)(firstOpenId == byte.MaxValue ? 0 : firstOpenId + 1);
             }
 
-            public Room CreateAndAdd(Server svr)
+            public Room CreateAndAdd(Server svr, string name)
             {
                 if (IsFull) return null;
-                Room room = new Room(svr, firstOpenId);
+                Room room = new Room(svr, firstOpenId, name);
                 Add(room);
                 return room;
             }
@@ -86,9 +86,9 @@ namespace Messenger
             return rooms[id];
         }
 
-        public Room CreateRoom()
+        public Room CreateRoom(string name)
         {
-            return rooms.CreateAndAdd(this);
+            return rooms.CreateAndAdd(this, name);
         }
 
         public void RemoveRoom(Room room)

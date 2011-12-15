@@ -9,6 +9,7 @@ namespace Messenger
     {
         Server server;
         byte id;
+        string name;
         List<Client> clients;
         Queue<Message> pending;
         Thread poster;
@@ -18,6 +19,10 @@ namespace Messenger
         {
             get { return id; }
         }
+        public string Name
+        {
+            get { return name; }
+        }
         public RoomInfo Info
         {
             get
@@ -25,15 +30,16 @@ namespace Messenger
                 RoomInfo info = new RoomInfo();
                 info.id = id;
                 info.members = (byte)clients.Count;
-                info.name = "Test Room";
+                info.name = name;
                 return info;
             }
         }
 
-        public Room(Server server, byte id)
+        public Room(Server server, byte id, string name)
         {
             this.server = server;
             this.id = id;
+            this.name = name;
             clients = new List<Client>();
             pending = new Queue<Message>();
             posterWait = new ManualResetEvent(true);

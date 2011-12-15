@@ -22,7 +22,7 @@ namespace Messenger
             foreach (RoomInfo info in m.GetContentAsRoomInfos())
                 Console.WriteLine(info.id + " " + info.name + " (" + info.members + ")");
             // create and join new room
-            MessageOps.Send(sock, MessageType.CreateRoom, null);
+            MessageOps.Send(sock, MessageType.CreateRoom, Message.Encoding.GetBytes("Test Room"));
             while (true)
             {
                 string s = Console.ReadLine();

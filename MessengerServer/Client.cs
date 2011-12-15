@@ -69,7 +69,7 @@ namespace Messenger
                         Message.GetRoomInfosAsBytes(server.GetRoomInfos())));
                     break;
                 case MessageType.CreateRoom:
-                    JoinRoom(server.CreateRoom());
+                    JoinRoom(server.CreateRoom(request.GetContentAsString()));
                     break;
                 case MessageType.JoinRoom:
                     JoinRoom(server.GetRoom(request.Content[0]));
