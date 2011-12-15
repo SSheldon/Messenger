@@ -1,13 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
-using System.Net.Sockets;
 using System.Text;
 
 namespace Messenger
 {
     public enum MessageType : byte
     {
-        MessagePost, Login
+        MessagePost, Login, GetRooms, CreateRoom, JoinRoom, LeaveRoom
+    }
+
+    public struct RoomInfo
+    {
+        public byte id;
+        public byte members;
+        public string name;
+
+        public byte NameLength
+        {
+            get { return (byte)Message.Encoding.GetByteCount(name); }
+        }
     }
 
     public class Message
@@ -51,6 +63,39 @@ namespace Messenger
         public string GetContentAsString()
         {
             return Message.Encoding.GetString(content, 0, length);
+        }
+
+        public IEnumerable<RoomInfo> GetContentAsRoomInfos()
+        {
+            for (int i = 0; i < length; i++)
+            {
+                RoomInfo info = new RoomInfo();
+                info.id = content[i++];
+                info.members = content[i++];
+                int nameLength = content[i++];
+                info.name = Message.Encoding.GetString(content, i, nameLength);
+                i += nameLength;
+                yield return info;
+            }
+        }
+
+        public static byte[] GetRoomInfosAsBytes(IEnumerable<RoomInfo> infos)
+        {
+            int buffLen = 0;
+            foreach (RoomInfo info in infos)
+                buffLen += 3 + info.NameLength;
+            byte[] buffer = new byte[buffLen];
+            int i = 0;
+            foreach (RoomInfo info in infos)
+            {
+                buffer[i++] = info.id;
+                buffer[i++] = info.members;
+                byte nameLength = info.NameLength;
+                buffer[i++] = nameLength;
+                Message.Encoding.GetBytes(info.name, 0, info.name.Length, buffer, i);
+                i += nameLength;
+            }
+            return buffer;
         }
     }
 }
