@@ -97,16 +97,18 @@ namespace Messenger
 
         public void JoinRoom(Room room)
         {
-            if (this.room != null)
-                this.room.RemoveClient(this);
+            LeaveRoom();
             this.room = room;
             room.AddClient(this);
         }
 
         public void LeaveRoom()
         {
-            room.RemoveClient(this);
-            room = null;
+            if (room != null)
+            {
+                room.RemoveClient(this);
+                room = null;
+            }
         }
     }
 }
