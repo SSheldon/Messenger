@@ -67,6 +67,7 @@ namespace Messenger
         public Server(int port = 4560)
         {
             rooms = new RoomArray();
+            CreateRoom("Default Room");
             sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             sock.Bind(new IPEndPoint(IPAddress.Any, port));
             sock.Listen(10);
