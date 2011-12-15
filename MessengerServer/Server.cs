@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -47,6 +49,16 @@ namespace Messenger
                 else firstOpenId = Math.Min(firstOpenId, id);
                 count--;
             }
+
+            public IEnumerable<Room> Elements()
+            {
+                for (int seen = 0, i = 0; seen < count; i++)
+                {
+                    if (rooms[i] == null) continue;
+                    seen++;
+                    yield return rooms[i];
+                }
+            }
         }
 
         Socket sock;
@@ -83,6 +95,11 @@ namespace Messenger
         public void RemoveRoom(Room room)
         {
             rooms.Remove(room.Id);
+        }
+
+        public IEnumerable<RoomInfo> GetRoomInfos()
+        {
+            return from room in rooms.Elements() select room.Info;
         }
 
         public static void Main(string[] args)

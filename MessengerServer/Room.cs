@@ -18,6 +18,17 @@ namespace Messenger
         {
             get { return id; }
         }
+        public RoomInfo Info
+        {
+            get
+            {
+                RoomInfo info = new RoomInfo();
+                info.id = id;
+                info.members = (byte)clients.Count;
+                info.name = "Test Room";
+                return info;
+            }
+        }
 
         public Room(Server server, byte id)
         {
