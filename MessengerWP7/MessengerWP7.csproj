@@ -67,6 +67,9 @@
     <Compile Include="ChatRoomPage.xaml.cs">
       <DependentUpon>ChatRoomPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CreateRoomPage.xaml.cs">
+      <DependentUpon>CreateRoomPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -81,6 +84,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="ChatRoomPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateRoomPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
