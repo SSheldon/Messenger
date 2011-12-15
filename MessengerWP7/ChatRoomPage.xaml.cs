@@ -25,6 +25,19 @@ namespace Messenger
             BeginReceive();
         }
 
+        protected override void OnRemovedFromJournal(JournalEntryRemovedEventArgs e)
+        {
+            //send a leave room request
+            SocketAsyncEventArgs args = new SocketAsyncEventArgs();
+            Message m = new Message(MessageType.LeaveRoom, null);
+            byte[] buffer = m.GetBytes();
+            args.SetBuffer(buffer, 0, buffer.Length);
+            args.Completed += new EventHandler<SocketAsyncEventArgs>(MessagePosted);
+            if (!App.ConnectedSocket.SendAsync(args)) MessagePosted(null, args);
+            //continue with base
+            base.OnRemovedFromJournal(e);
+        }
+
         private void BeginReceive()
         {
             SocketAsyncEventArgs args = new SocketAsyncEventArgs();
