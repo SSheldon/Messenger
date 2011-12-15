@@ -67,7 +67,6 @@ namespace Messenger
         public Server(int port = 4560)
         {
             rooms = new RoomArray();
-            CreateRoom();
             sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             sock.Bind(new IPEndPoint(IPAddress.Any, port));
             sock.Listen(10);
@@ -78,7 +77,7 @@ namespace Messenger
             while (true)
             {
                 Socket clientSock = sock.Accept();
-                new Client(this, clientSock).JoinRoom(rooms[0]);
+                Client client = new Client(this, clientSock);
             }
         }
 
