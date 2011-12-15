@@ -16,6 +16,18 @@ namespace Messenger
         public byte members;
         public string name;
 
+        public byte Id
+        {
+            get { return id; }
+        }
+        public byte MemberCount
+        {
+            get { return members; }
+        }
+        public string Name
+        {
+            get { return name; }
+        }
         public byte NameLength
         {
             get { return (byte)Message.Encoding.GetByteCount(name); }
