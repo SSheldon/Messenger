@@ -58,8 +58,19 @@ namespace Messenger
                     break;
                 case MessageType.Login:
                     username = request.GetContentAsString();
-                    room.PostMessage(new Message(MessageType.MessagePost,
-                        Message.Encoding.GetBytes(username + " joined.")));
+                    break;
+                case MessageType.GetRooms:
+                    SendMessage(new Message(MessageType.GetRooms,
+                        Message.GetRoomInfosAsBytes(server.GetRoomInfos())));
+                    break;
+                case MessageType.CreateRoom:
+                    JoinRoom(server.CreateRoom());
+                    break;
+                case MessageType.JoinRoom:
+                    JoinRoom(server.GetRoom(request.Content[0]));
+                    break;
+                case MessageType.LeaveRoom:
+                    LeaveRoom();
                     break;
             }
         }
