@@ -33,7 +33,7 @@ namespace Messenger
         byte[] content;
         int length
         {
-            get { return content.Length; }
+            get { return (content != null ? content.Length : 0); }
         }
 
         public MessageType Type
@@ -56,7 +56,7 @@ namespace Messenger
             byte[] bytes = new byte[length + 5];
             Array.Copy(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(length)), bytes, 4);
             bytes[4] = (byte)type;
-            Array.Copy(content, 0, bytes, 5, length);
+            if (content != null) Array.Copy(content, 0, bytes, 5, length);
             return bytes;
         }
 
@@ -67,7 +67,7 @@ namespace Messenger
 
         public IEnumerable<RoomInfo> GetContentAsRoomInfos()
         {
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < length; )
             {
                 RoomInfo info = new RoomInfo();
                 info.id = content[i++];
