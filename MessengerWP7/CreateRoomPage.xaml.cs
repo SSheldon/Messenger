@@ -29,7 +29,8 @@ namespace Messenger
             byte[] buffer = m.GetBytes();
             args.SetBuffer(buffer, 0, buffer.Length);
             args.Completed += new EventHandler<SocketAsyncEventArgs>(RoomJoined);
-            if (!App.ConnectedSocket.SendAsync(args)) RoomJoined(null, args);
+            if (!App.ConnectedSocket.SendAsync(args))
+                RoomJoined(null, args);
         }
 
         private void RoomJoined(object sender, SocketAsyncEventArgs e)
