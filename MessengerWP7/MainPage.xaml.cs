@@ -16,6 +16,8 @@ namespace Messenger
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        Message message;
+
         // Constructor
         public MainPage()
         {
@@ -57,7 +59,68 @@ namespace Messenger
             {
                 //connected and data successfully sent
                 App.ConnectedSocket = e.ConnectSocket;
-                Dispatcher.BeginInvoke(() => NavigationService.Navigate(new Uri("/ChatRoomPage.xaml", UriKind.Relative)));
+                //request to get rooms
+                SocketAsyncEventArgs args = new SocketAsyncEventArgs();
+                Message m = new Message(MessageType.GetRooms, null);
+                byte[] buffer = m.GetBytes();
+                args.SetBuffer(buffer, 0, buffer.Length);
+                args.Completed += new EventHandler<SocketAsyncEventArgs>(GetRoomsRequestSent);
+                if (!App.ConnectedSocket.SendAsync(args)) GetRoomsRequestSent(null, args);
+            }
+        }
+
+        private void GetRoomsRequestSent(object sender, SocketAsyncEventArgs e)
+        {
+            if (e.BytesTransferred < e.Count)
+            {
+                e.SetBuffer(e.Offset + e.BytesTransferred, e.Count - e.BytesTransferred);
+                if (!App.ConnectedSocket.SendAsync(e)) GetRoomsRequestSent(e.ConnectSocket, e);
+            }
+            else
+            {
+                //request sent, wait to receive response
+                BeginReceive();
+            }
+        }
+
+        private void BeginReceive()
+        {
+            SocketAsyncEventArgs args = new SocketAsyncEventArgs();
+            args.SetBuffer(new byte[5], 0, 5);
+            args.Completed += new EventHandler<SocketAsyncEventArgs>(HeaderReceived);
+            if (!App.ConnectedSocket.ReceiveAsync(args)) HeaderReceived(null, args);
+        }
+
+        private void HeaderReceived(object sender, SocketAsyncEventArgs e)
+        {
+            int length = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(e.Buffer, 0));
+            MessageType type = (MessageType)e.Buffer[4];
+            message = new Message(type, new byte[length]);
+            //receive the content of the message
+            SocketAsyncEventArgs args = new SocketAsyncEventArgs();
+            args.SetBuffer(message.Content, 0, length);
+            args.Completed += new EventHandler<SocketAsyncEventArgs>(ContentReceived);
+            if (!App.ConnectedSocket.ReceiveAsync(args)) ContentReceived(null, args);
+        }
+
+        private void ContentReceived(object sender, SocketAsyncEventArgs e)
+        {
+            if (e.BytesTransferred < e.Count)
+            {
+                e.SetBuffer(e.Offset + e.BytesTransferred, e.Count - e.BytesTransferred);
+                if (!App.ConnectedSocket.ReceiveAsync(e)) ContentReceived(e.ConnectSocket, e);
+            }
+            else if (message.Type != MessageType.GetRooms)
+            {
+                //not the message we were looking for, receive another
+                BeginReceive();
+            }
+            else
+            {
+                App.RoomInfos = message.GetContentAsRoomInfos().ToList();
+                message = null;
+                //show the chat page
+                Dispatcher.BeginInvoke(() => NavigationService.Navigate(new Uri("/RoomListPage.xaml", UriKind.Relative)));
             }
         }
     }
