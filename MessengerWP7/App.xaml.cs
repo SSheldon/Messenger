@@ -19,6 +19,7 @@ namespace Messenger
     public partial class App : Application
     {
         public static Socket ConnectedSocket { get; set; }
+        public static List<RoomInfo> RoomInfos { get; set; }
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
