@@ -74,6 +74,7 @@ namespace Messenger
             {
                 clients.Add(client);
             }
+            PostMessage(client.Username + " joined.");
         }
 
         public void RemoveClient(Client client)
@@ -82,6 +83,7 @@ namespace Messenger
             {
                 clients.Remove(client);
             }
+            PostMessage(client.Username + " left.");
         }
 
         public void PostMessage(Message message)
@@ -100,6 +102,11 @@ namespace Messenger
             Message.Encoding.GetBytes(prepend, 0, prepend.Length, buffer, 0);
             Array.Copy(message.Content, 0, buffer, prepend.Length, message.Content.Length);
             PostMessage(new Message(MessageType.MessagePost, buffer));
+        }
+
+        public void PostMessage(string message)
+        {
+            PostMessage(new Message(MessageType.MessagePost, Message.Encoding.GetBytes(message)));
         }
     }
 }

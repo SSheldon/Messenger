@@ -15,6 +15,11 @@ namespace Messenger
         Queue<Message> pending;
         string username;
 
+        public string Username
+        {
+            get { return username; }
+        }
+
         public Client(Server server, Socket sock)
         {
             this.server = server;
